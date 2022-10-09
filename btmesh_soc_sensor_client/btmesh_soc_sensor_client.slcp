@@ -1,0 +1,99 @@
+# Silicon Labs Project Configuration Tools: slcp, v0, Component selection file.
+project_name: btmesh_soc_sensor_client
+label: btmesh_soc_sensor_client
+description: |
+  This example demonstrates the Bluetooth Mesh Sensor Client Model. It collects and displays sensor measurement data from remote device(s) (e.g., btmesh_soc_sensor_server).
+category: Bluetooth Mesh Examples
+filter:
+- name: Device Type
+  value: [SoC]
+- name: Project Difficulty
+  value: [Advanced]
+- name: Wireless Technology
+  value: [Bluetooth Mesh]
+package: Btmesh
+quality: production
+readme:
+- {path: readme.md}
+source:
+- {path: app.c}
+- {path: app_out_log.c}
+- {path: local_cli_commands.c}
+- {path: main.c}
+tag: ['hardware:component:display:!ls013b7dh03', prebuilt_demo, 'hardware:component:button:1',
+  'hardware:rf:band:2400', 'hardware:component:led:1', 'hardware:device:flash:512',
+  'hardware:board_only', 'hardware:device:ram:32']
+include:
+- path: ''
+  file_list:
+  - {path: app.h}
+sdk: {id: gecko_sdk, version: 4.1.1}
+toolchain_settings: []
+component:
+- {id: btmesh_factory_reset}
+- {id: btmesh_sensor_client}
+- instance: [btn0]
+  id: simple_button
+- instance: [example]
+  id: cli
+- {id: btmesh_event_log}
+- {id: in_place_ota_dfu}
+- {id: simple_timer}
+- {id: mpu}
+- instance: [led0]
+  id: simple_led
+- {id: rail_util_pti}
+- {id: btmesh_feature_gatt_prov_bearer}
+- {id: btmesh_feature_relay}
+- {id: btmesh_proxy}
+- {id: app_button_press}
+- {id: app_log}
+- instance: [vcom]
+  id: iostream_usart
+- {id: btmesh_provisioning_decorator}
+- {id: btmesh_stack}
+- {id: bluetooth_feature_system}
+- {id: brd4184a}
+- {id: bootloader_interface}
+- {id: app_assert}
+- {id: EFR32BG22C224F512IM40}
+other_file:
+- {path: create_bl_files.bat}
+- {path: create_bl_files.sh}
+- {path: readme_img0.png}
+- {path: readme_img1.png}
+- {path: readme_img2.png}
+- {path: readme_img3.png}
+- {path: readme_img4.png}
+- {path: readme_img5.png}
+- {path: readme_img6.png}
+- {path: readme_img7.png}
+- {path: readme_img8.png}
+define:
+- {name: SINGLE_BUTTON, value: '1'}
+- {name: SINGLE_LED, value: '1'}
+template_contribution:
+- condition: [cli]
+  name: cli_command
+  priority: 0
+  value: {name: info, handler: info, help: Prints info about BT address and mesh UUID}
+configuration:
+- {name: APP_LOG_LEVEL, value: APP_LOG_LEVEL_INFO}
+- {name: NVM3_DEFAULT_CACHE_SIZE, value: '100'}
+- condition: [iostream_usart]
+  name: SL_BOARD_ENABLE_VCOM
+  value: '1'
+- condition: [device_sdid_205]
+  name: SL_CLI_NUM_HISTORY_BYTES
+  value: '0'
+- {name: SL_HEAP_SIZE, value: '0x4000'}
+- condition: [psa_crypto]
+  name: SL_PSA_KEY_USER_SLOT_COUNT
+  value: '0'
+- {name: SL_STACK_SIZE, value: '0x1200'}
+ui_hints:
+  highlight:
+  - {path: readme.md, focus: true}
+  - {path: config/btconf/gatt_configuration.btconf}
+  - {path: config/btmeshconf/dcd_config.btmeshconf}
+

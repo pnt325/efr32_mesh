@@ -1,0 +1,76 @@
+# Silicon Labs Project Configuration Tools: slcp, v0, Component selection file.
+project_name: btmesh_soc_vendor_server
+label: btmesh_soc_vendor_server
+description: |
+  Demonstrates the bare minimum needed for a Bluetooth Mesh C application. The application starts Unprovisioned Device Beaconing after booting, and then waits to be provisioned.
+category: Bluetooth Mesh Examples
+filter:
+- name: Device Type
+  value: [SoC]
+- name: Project Difficulty
+  value: [Beginner]
+- name: Wireless Technology
+  value: [Bluetooth Mesh]
+package: Btmesh
+quality: production
+readme:
+- {path: readme.md}
+source:
+- {path: app.c}
+- {path: main.c}
+tag: ['hardware:rf:band:2400', 'hardware:device:flash:512', 'hardware:device:ram:32']
+include:
+- path: ''
+  file_list:
+  - {path: app.h}
+sdk: {id: gecko_sdk, version: 4.1.1}
+toolchain_settings: []
+component:
+- {id: iostream_rtt}
+- {id: btmesh_factory_reset}
+- instance: [btn0]
+  id: simple_button
+- {id: btmesh_feature_node}
+- {id: in_place_ota_dfu}
+- {id: mpu}
+- {id: iostream_usart_core}
+- instance: [led0]
+  id: simple_led
+- {id: btmesh_feature_gatt_prov_bearer}
+- {id: rail_util_pti}
+- {id: btmesh_feature_relay}
+- {id: btmesh_feature_vendor_model}
+- {id: btmesh_proxy}
+- {id: app_log}
+- {id: btmesh_provisioning_decorator}
+- {id: btmesh_stack}
+- {id: brd4184a}
+- {id: bootloader_interface}
+- {id: app_assert}
+- {id: EFR32BG22C224F512IM40}
+other_file:
+- {path: create_bl_files.bat}
+- {path: create_bl_files.sh}
+- {path: readme_img0.png}
+- {path: readme_img1.png}
+- {path: readme_img2.png}
+- {path: readme_img3.png}
+- {path: readme_img4.png}
+- {path: readme_img5.png}
+template_contribution:
+- {name: memory_ram_start, priority: 0, value: 536870912}
+- {name: memory_ram_size, priority: 0, value: 32768}
+- {name: memory_flash_start, priority: 0, value: 73728}
+- {name: memory_flash_size, priority: 0, value: 450560}
+configuration:
+- {name: SL_HEAP_SIZE, value: '0x4000'}
+- condition: [psa_crypto]
+  name: SL_PSA_KEY_USER_SLOT_COUNT
+  value: '0'
+- {name: SL_STACK_SIZE, value: '0x1200'}
+ui_hints:
+  highlight:
+  - {path: readme.md, focus: true}
+  - {path: config/btconf/gatt_configuration.btconf}
+  - {path: config/btmeshconf/dcd_config.btmeshconf}
+
